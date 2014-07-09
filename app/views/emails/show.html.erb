@@ -1,0 +1,10 @@
+<div class = "row">
+  <div class = "col-md-12">
+    <ul class = "list-inline">
+      <li><%= "From : #{@email[:from]}" %></li>
+      <li><%= "Date : #{@email[:sent_at]}" %></li>
+      <li><%= "Subject: #{@email[:subject]}" %></li>
+    </ul>
+  </div>
+</div>
+<p><%== @email.content %></p>

@@ -1,0 +1,14 @@
+<h1>Your Email:</h1>
+
+<% @messages.each do |message| %>
+<div class = "row">
+  <ul class = "list-inline">
+    <li><%= "From : #{message[:from]}" %></li>
+    <li><%= "Date : #{message[:sent_at]}" %></li>
+    <li><%= "To : #{message[:to]}" %></li>
+    <li><%= "Subject: #{message[:subject]}" %></li>
+  </ul>
+</div>
+<p><%== message[:content] %></p>
+<p>===============================================================================================</p>
+<% end %>

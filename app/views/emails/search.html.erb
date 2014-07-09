@@ -1,0 +1,12 @@
+  <% @my_emails.each do |msg| %>
+    <div class = "row">
+      <div class = "col-md-12">
+        <ul class = "list-inline">
+          <li>ID : <%= link_to msg.id, email_path(msg.id) %></li>
+          <li><%= "From : #{msg.from}" %></li>
+          <li><%= "Date : #{msg.sent_at}" %></li>
+          <li><%= "Subject: #{msg.subject}" %></li>
+        </ul>
+      </div>
+    </div>
+  <% end %>

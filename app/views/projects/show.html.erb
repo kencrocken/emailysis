@@ -1,0 +1,79 @@
+<h1><%= "#{@project.name}" %> <small><%= "#{@project.description}" %></small></h1>
+
+
+<% if @project.emails.empty? %>
+
+  <p>No data associated with project.</p>
+  <h3><%= link_to 'Get Email', new_email_path, class: "btn btn-large btn-primary" %></h3>
+
+<% else %>
+<%= javascript_tag "var d = #{@inbox_date_count.to_json};
+                    var e = #{@sent_date_count.to_json};
+                    var f = #{@sender_count.to_json};
+                    var g = #{@to_count.to_json};" %>
+                    
+  <h3>Inbox</h3>
+  <div id="inbox-map"></div>
+
+<script type="text/javascript">
+  var cal = new CalHeatMap();
+  cal.init({ 
+  itemSelector: "#inbox-map",
+  domain: "month",
+  subDomain: "x_day",
+  data: d,
+  start: new Date(2014, 0),
+  cellSize: 10,
+  range: 12,
+  tooltip: true,
+  legend: [20, 40, 60, 80],
+  legendColors: ["#efefef", "steelblue"],
+  onClick: function(date, nb) {
+    $("#inbox-onClick-placeholder").html("You just clicked <br/>on <b>" +
+      date + "</b> <br/>with <b>" +
+      (nb === null ? "unknown" : nb) + "</b> items"
+    );
+  }
+  });
+</script>
+  <div id = "inbox-onClick-placeholder"></div>
+
+  <h3>Sent Box</h3>
+  <div id="sent-map"></div>
+
+<script type="text/javascript">
+  var cal = new CalHeatMap();
+  cal.init({ 
+  itemSelector: "#sent-map",
+  domain: "month",
+  subDomain: "x_day",
+  data: e,
+  start: new Date(2014, 0),
+  cellSize: 10,
+  range: 12,
+  tooltip: true,
+  legend: [2, 4, 6, 8],
+  legendColors: ["#efefef", "steelblue"],
+  onClick: function(date, nb) {
+    $("#sent-onClick-placeholder").html("You just clicked <br/>on <b>" +
+      date + "</b> <br/>with <b>" +
+      (nb === null ? "unknown" : nb) + "</b> items"
+    );
+  }
+  });
+</script>
+<div id = "sent-onClick-placeholder"></div>
+
+<%= form_tag '/search/:q', method: 'get' do %>
+  <%= label_tag :q, "Search Email:" %>
+  <%= text_field_tag :q, params[:q] %>
+  <%= submit_tag 'Search', class: "btn btn-large btn-primary" %>
+<% end %>
+
+
+  <p><strong>Sender count:</strong> <%= @sender_count.to_json %></p>
+
+  <p><strong>To count:</strong> <%= @to_count.to_json %></p>
+
+
+<% end %>

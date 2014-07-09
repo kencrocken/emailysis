@@ -1,0 +1,11 @@
+<% if user_signed_in? %>
+  <p><%= image_tag current_user.image %></p>
+  <p><%= "#{current_user.email}" %></p>
+  <% current_user.projects.each do |project| %>
+    <h3><%= link_to project.name, project_path(project.id) %> <small><%= "#{project.description}" %> Emails : <%= "#{project.emails.size}" %></small></h3>
+  <% end %>
+    <h3><%= link_to 'Create New Project', new_project_path, class: "btn btn-large btn-primary" %></h3>
+<% else %>
+  <h3>Sign in.</h3>
+<% end %>
+
