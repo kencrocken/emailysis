@@ -8,7 +8,19 @@
 </head>
 <body>
 
-<div class="container">
+
+<div class="container"> 
+  <div class="header">
+    <ul class="nav nav-pills pull-right">  
+    <% if user_signed_in? %>
+      <li class="active"><%= link_to "Home", root_path %></li>
+      <li><%= link_to "Sign out", destroy_user_session_path,:method => :delete %></li>
+    <% else %>
+      <%= link_to "Sign in with Google", user_omniauth_authorize_path(:google_oauth2) %>
+    <% end %>
+    </ul>
+    <h3 class="text-muted">Emailysis</h3>
+  </div> 
 
   <% if !notice.nil? %>
     <p class="alert alert-success"><%= notice %></p>
@@ -17,16 +29,6 @@
     <p class="alert alert-danger"><%= alert %></p>
   <% end %>
   
-  <% if user_signed_in? %>
-    Signed in as <%= current_user.name %>. Not you?
-    <%= link_to "Sign out", destroy_user_session_path,:method => :delete %>
-    <%= link_to "Home", root_path %>
-  <% else %>
-    <%= link_to "Sign up", new_user_registration_path %> or
-    <%= link_to "Sign in", new_user_session_path %>
-    <%= link_to "Sign in with Google", user_omniauth_authorize_path(:google_oauth2) %>
-  <% end %>
-
   <%= yield %>
 
 </div>

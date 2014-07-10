@@ -1,17 +1,28 @@
 <% if !@my_emails.empty? %>
+  <div class="panel panel-default">
+    <div class="panel-heading"><h2>Search Results</h2></div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>From:</th>
+            <th>Date</th>
+            <th>Subject</th>
+          </tr>
+        </thead>
+        <tbody>
   <% @my_emails.each do |msg| %>
-    <div class = "row">
-      <div class = "col-md-12">
-        <ul class = "list-inline">
-          <li>ID : <%= link_to msg.id, email_path(msg.id) %></li>
-          <li><%= "From : #{msg.from}" %></li>
-          <li><%= "Date : #{msg.sent_at}" %></li>
-          <li><%= "Subject: #{msg.subject}" %></li>
-          <li><%= "Project ID : #{msg.project.name}" %></li>
-        </ul>
-      </div>
-    </div>
+          <tr>
+            <td><%= link_to msg.id, email_path(msg.id) %></td>
+            <td><%= "From : #{msg.from}" %></td>
+            <td><%= "Date : #{msg.sent_at}" %></td>
+            <td><%= "Subject: #{msg.subject}" %></td>
+          </tr>
   <% end %>
+
+        </tbody>
+      </table>
+  </div>
 <% else %>
   <h3>Your search returned no results.</h3>
 <% end %>

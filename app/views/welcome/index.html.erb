@@ -1,11 +1,24 @@
 <% if user_signed_in? %>
-  <p><%= image_tag current_user.image %></p>
-  <p><%= "#{current_user.email}" %></p>
+  <div class= "row">
+    <div class = "col-md-1">
+      <p><%= image_tag current_user.image, class: "img-responsive img-rounded" %></p>
+    </div>
+    <div class = "col-md-6">
+      <h2><%= current_user.name %></h2>
+    </div>
+  </div>
   <% current_user.projects.each do |project| %>
     <h3><%= link_to project.name, project_path(project.id) %> <small><%= "#{project.description}" %> Emails : <%= "#{project.emails.size}" %></small></h3>
   <% end %>
     <h3><%= link_to 'Create New Project', new_project_path, class: "btn btn-large btn-primary" %></h3>
 <% else %>
-  <h3>Sign in.</h3>
+
+      <div class="jumbotron">
+        <h1>Emailysis</h1>
+        <p class="lead">Do you know what's in the box?</p>
+        <p><%= link_to "Sign in with Google", user_omniauth_authorize_path(:google_oauth2), class: "btn btn-large btn-primary" %></p>
+      </div>
+
+
 <% end %>
 

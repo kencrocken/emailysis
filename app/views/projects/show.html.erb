@@ -143,6 +143,7 @@ var data = d3.entries(f);
  
   svg.selectAll(".bar")
       .data(data)
+
     .enter().append("rect")
       .attr("class", "bar")
       .attr("x", function(d) { return x(d.key); })
@@ -151,7 +152,7 @@ var data = d3.entries(f);
       .attr("height", function(d) { return height - y(d.value); })
       // .style("fill", function(d) { return "rgb(0, 0, " + (d.Freq) + ")"; });
       .style("fill", function(d) { return color(d.value); });
-      
+
   svg.append("text")
         .attr("class", "histogram-title")
         .attr("y", height - 400)
