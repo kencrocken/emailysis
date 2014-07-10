@@ -7,11 +7,23 @@
   <h3><%= link_to 'Get Email', new_email_path, class: "btn btn-large btn-primary" %></h3>
 
 <% else %>
-<%= javascript_tag "var d = #{@inbox_date_count.to_json};
-                    var e = #{@sent_date_count.to_json};
-                    var f = #{@sender_count.to_json};
-                    var g = #{@to_count.to_json};" %>
-                    
+<%= javascript_tag "var d = #{@inbox_date_count.to_json}
+                    var e = #{@sent_date_count.to_json}
+                    var f = #{@sender_count.to_json}
+                    var g = #{@to_count.to_json}" %>
+
+<!-- <form class="form-horizontal" role="form"> -->
+  <div class="form-group">
+   
+    <%= form_tag('/search/', method: 'get') do %>
+      <div class="col-sm-4">
+        <%= text_field_tag :q, params[:q], class: "form-control", placeholder: "Search Email" %>
+      </div>
+        <%= submit_tag 'Search', class: "btn btn-default" %>
+    <% end %>
+  </div>
+<!-- </form> -->
+
   <h3>Inbox</h3>
   <div id="inbox-map"></div>
 
@@ -20,7 +32,7 @@
   cal.init({ 
   itemSelector: "#inbox-map",
   domain: "month",
-  subDomain: "x_day",
+  subDomain: "day",
   data: d,
   start: new Date(2014, 0),
   cellSize: 10,
@@ -38,6 +50,7 @@
 </script>
   <div id = "inbox-onClick-placeholder"></div>
 
+
   <h3>Sent Box</h3>
   <div id="sent-map"></div>
 
@@ -46,7 +59,7 @@
   cal.init({ 
   itemSelector: "#sent-map",
   domain: "month",
-  subDomain: "x_day",
+  subDomain: "day",
   data: e,
   start: new Date(2014, 0),
   cellSize: 10,
@@ -64,16 +77,90 @@
 </script>
 <div id = "sent-onClick-placeholder"></div>
 
-<%= form_tag '/search/:q', method: 'get' do %>
-  <%= label_tag :q, "Search Email:" %>
-  <%= text_field_tag :q, params[:q] %>
-  <%= submit_tag 'Search', class: "btn btn-large btn-primary" %>
-<% end %>
 
 
-  <p><strong>Sender count:</strong> <%= @sender_count.to_json %></p>
+  <div id = "graph"></div>
 
-  <p><strong>To count:</strong> <%= @to_count.to_json %></p>
 
+<script>
+
+var margin = {top: 20, right: 20, bottom: 250, left: 20},
+    width = 800 - margin.left - margin.right,
+    height = 700 - margin.top - margin.bottom;
+ 
+var x = d3.scale.ordinal()
+    .rangeRoundBands([0, width], .1);
+ 
+var y = d3.scale.linear()
+    .range([height, 0]);
+ 
+var color = d3.scale.linear()
+    .domain([0,100])
+    .range(["#efefef", "steelblue"])
+    .interpolate(d3.interpolateLab);
+ 
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
+ 
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left")
+    .ticks(10);
+ 
+var svg = d3.select("#graph").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+ 
+var data = d3.entries(f);
+
+  x.domain(data.map(function(d) { return d.key; }));
+  y.domain([0, d3.max(data, function(d) { return d.value; })]);
+ 
+  svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis)
+      .selectAll("text")  
+          .style("text-anchor", "end")
+          .attr("dx", "-.8em")
+          .attr("dy", ".15em")
+          .attr("transform", function(d) {
+              return "rotate(-90)" 
+              });
+ 
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Frequency");
+ 
+  svg.selectAll(".bar")
+      .data(data)
+    .enter().append("rect")
+      .attr("class", "bar")
+      .attr("x", function(d) { return x(d.key); })
+      .attr("width", x.rangeBand())
+      .attr("y", function(d) { return y(d.value); })
+      .attr("height", function(d) { return height - y(d.value); })
+      // .style("fill", function(d) { return "rgb(0, 0, " + (d.Freq) + ")"; });
+      .style("fill", function(d) { return color(d.value); });
+      
+  svg.append("text")
+        .attr("class", "histogram-title")
+        .attr("y", height - 400)
+        .attr("x", width - 200)
+        .attr("text-anchor", "end")
+        .text("Top Senders");
+ 
+
+
+</script>
 
 <% end %>

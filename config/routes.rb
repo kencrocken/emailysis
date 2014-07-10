@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   resources :projects
   resources :emails
 
-  match '/search/:id', to: 'emails#search', via: 'get'
+  match '/search', to: 'emails#search', via: 'get'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

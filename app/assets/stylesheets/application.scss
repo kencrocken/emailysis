@@ -19,3 +19,30 @@
 body {
   padding: 20px 20px;
 }
+
+.histogram-title{
+  font-size: 24px;
+  font-family: sans-serif;
+ }
+
+.bar {
+  fill: black;
+}
+ 
+.bar:hover{
+  fill: firebrick;
+}
+.axis {
+  font: 10px sans-serif;
+}
+ 
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+ 
+.x.axis path {
+  display: none;
+}

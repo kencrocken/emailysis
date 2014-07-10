@@ -28,29 +28,23 @@ class Email < ActiveRecord::Base
   end
 
   def self.email_count(dates)
-
     x = Hash.new(0)
     dates.each do |z|
       x[z] +=1
     end
     return x
-
   end
 
   def self.sender_count(senders)
-
     x = Hash.new(0)
     senders.each do |z|
       x[z] +=1
     end
     y = x.reject{ |k,v| v < 10 }
-    return y
-
   end
 
   def self.search_email argument
-    Email.where("from LIKE :query OR to LIKE :query OR sent_at LIKE :query OR subject LIKE :query OR content LIKE :query", 
-                query: "%#{argument}%")
+    Email.where("subject LIKE :query OR content LIKE :query", query: "%#{argument}%")
   end
 
   def self.search_email_date argument
