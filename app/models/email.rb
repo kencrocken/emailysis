@@ -18,7 +18,7 @@ class Email < ActiveRecord::Base
                               to: mail.to.to_s, 
                               sent_at: mail.date.to_time.strftime('%a %b %d %Y %H:%M:%S %Z'),
                               subject: mail.subject.to_s.force_encoding('UTF-8'),
-                              content: mail_body.to_s,
+                              content: mail_body,
                               folder: name,
                               project_id: project
                               )
