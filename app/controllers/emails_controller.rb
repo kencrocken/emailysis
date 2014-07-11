@@ -1,7 +1,7 @@
 class EmailsController < ApplicationController
 
   def new
-    @email = Email.delay.email_fetch(session[:project], current_user.email, session[:token])
+    @email = Email.email_fetch(session[:project], current_user.email, session[:token])
 
     if !@email.nil?
       flash[:notice] = "Emails populated"
@@ -11,7 +11,8 @@ class EmailsController < ApplicationController
       redirect_to projects_path
     end
   end
-
+  handle_asynchronously :new
+  
   def show
     @email = Email.find params[:id]
   end
