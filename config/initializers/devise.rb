@@ -237,8 +237,8 @@ Devise.setup do |config|
                                     access_type: "offline", 
                                     approval_prompt: "" }
 
+# for localhost:3000 "1088870928026-6ngpfid4dpllh4chm78c58nsuvtu949h.apps.googleusercontent.com", "8zSlpOWS7JRo7XyIBL9qLbLn", 
 
-# "1088870928026-6ngpfid4dpllh4chm78c58nsuvtu949h.apps.googleusercontent.com", "8zSlpOWS7JRo7XyIBL9qLbLn", 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.

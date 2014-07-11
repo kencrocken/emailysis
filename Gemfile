@@ -23,7 +23,7 @@ ruby '2.1.1'
   gem 'nokogiri'
   gem 'd3-rails'
   gem 'cal-heatmap-rails', github: 'pavolzbell/cal-heatmap-rails', branch: :master
-
+  gem 'pg'
 # Spring speeds up development by keeping your application running in the background. 
 # Read more: https://github.com/rails/spring
 group :development do
@@ -31,7 +31,7 @@ group :development do
 end     
 
 group :development, :test do
-  gem 'sqlite3'
+  # gem 'pg'
 #  gem 'rspec-rails'
 end
 
@@ -50,6 +50,6 @@ group :doc do
 end
 
 group :production do
-  gem 'pg', '0.15.1'
+  # gem 'pg'
   gem 'rails_12factor', '0.0.2'
 end
