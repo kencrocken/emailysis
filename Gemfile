@@ -24,6 +24,7 @@ ruby '2.1.1'
   gem 'd3-rails'
   gem 'cal-heatmap-rails', github: 'pavolzbell/cal-heatmap-rails', branch: :master
   gem 'pg'
+  gem "unicorn-rails"
 # Spring speeds up development by keeping your application running in the background. 
 # Read more: https://github.com/rails/spring
 group :development do
