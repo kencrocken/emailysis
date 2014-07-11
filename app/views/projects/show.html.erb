@@ -150,7 +150,7 @@ var data = d3.entries(f);
       .attr("width", x.rangeBand())
       .attr("y", function(d) { return y(d.value); })
       .attr("height", function(d) { return height - y(d.value); })
-      // .style("fill", function(d) { return "rgb(0, 0, " + (d.Freq) + ")"; });
+      // .style("fill", function(d) { return "rgb(0, 0, " + (d.value) + ")"; });
       .style("fill", function(d) { return color(d.value); });
 
   svg.append("text")
