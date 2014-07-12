@@ -1,7 +1,7 @@
 class EmailsController < ApplicationController
 
   def new
-    @email = Email.email_fetch(session[:project], current_user.email, session[:token])
+    @email = Email.delay.email_fetch(session[:project], current_user.email, session[:token])
 
     if !@email.nil?
       flash[:notice] = "Emails populated"
