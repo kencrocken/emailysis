@@ -230,15 +230,12 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   require 'omniauth-google-oauth2'
-  config.omniauth :google_oauth2, "1088870928026-3evo71o30glos8nnq392vpjsfno1su86.apps.googleusercontent.com", "fG1bJGZy3oqijGAPWVNleJ_V", 
+  config.omniauth :google_oauth2, ENV['GOOGLE_ID'], ENV['GOOGLE_SECRET']
                                   { :scope => "https://mail.google.com/,email,profile,plus.me",
                                     :image_aspect_ratio => "square",
                                     :image_size => 100,
                                     access_type: "offline", 
                                     approval_prompt: "" }
-
-# for localhost:3000 "1088870928026-6ngpfid4dpllh4chm78c58nsuvtu949h.apps.googleusercontent.com", "8zSlpOWS7JRo7XyIBL9qLbLn", 
-
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.

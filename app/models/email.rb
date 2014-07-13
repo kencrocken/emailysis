@@ -6,25 +6,28 @@ class Email < ActiveRecord::Base
     imap.authenticate('XOAUTH2', email, token)
     gmail = {inbox: 'INBOX', sent: '[Gmail]/Sent Mail'}
     gmail.each do |name, mailbox|
+      x = 0
       imap.select(mailbox)
-
       imap.search(['ALL']).each do |message_id|
 
         msg = imap.fetch(message_id,'RFC822')[0].attr['RFC822']
         mail = Mail.read_from_string msg
         mail_body = mail.multipart? ? mail.html_part : mail.body.decoded
-        mail_body = Nokogiri::Slop(mail_body.to_s)
+        # mail_body = Nokogiri::HTML(mail_body.to_s)
         email =  Email.create(from: mail.from.to_s, 
                               to: mail.to.to_s, 
                               sent_at: mail.date.to_time.strftime('%a %b %d %Y %H:%M:%S %Z'),
                               subject: mail.subject.to_s.force_encoding('UTF-8'),
-                              content: mail_body.to_s,
+                              content: mail_body.to_s.force_encoding('Windows-1252').encode('UTF-8'),
                               folder: name,
                               project_id: project
                               )
         email.save
+        x += 1
+        puts x
       end
     end
+    imap.logout
   end
 
   def self.email_count(dates)

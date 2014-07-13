@@ -18,10 +18,20 @@ class ProjectsController < ApplicationController
     @sent_date_array = []
     @sender_array = []
     @to_array = []
+    @start_date = @project.emails.first
+    @end_date = @project.emails.last
+    @start = @start_date[:sent_at]
+    @end = @end_date[:sent_at]
+    @date_difference = (@end.to_date - @start.to_date).to_i
+    @start_year = @start_date[:sent_at].to_time.strftime('%Y')
+    @start_month = @start_date[:sent_at].to_time.strftime('%m')
+    @start_month = @start_month.to_i
+    @start_month -= 1
+    @start_day = @start_date[:sent_at].to_time.strftime('%d')
 
     @inbox.each do |info|
 
-      x = info.sent_at.to_date
+      x = info.sent_at
       x = x.to_time.to_i
       x = x.to_s
       @inbox_date_array << x

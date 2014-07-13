@@ -23,7 +23,7 @@
     <% end %>
   </div>
 <!-- </form> -->
-
+<%= "#{@date_difference}" %>
   <h3>Inbox</h3>
   <div id="inbox-map"></div>
 
@@ -31,14 +31,14 @@
   var cal = new CalHeatMap();
   cal.init({ 
   itemSelector: "#inbox-map",
-  domain: "month",
-  subDomain: "day",
+  domain: "day",
+  subDomain: "hour",
   data: d,
-  start: new Date(2014, 0),
+  start: new Date(<%= "#{@start_year}, #{@start_month}, #{@start_day}" %>),
   cellSize: 10,
-  range: 12,
+  range: <%= @date_difference %>,
   tooltip: true,
-  legend: [20, 40, 60, 80],
+  legend: [2, 4, 6, 8],
   legendColors: ["#efefef", "steelblue"],
   onClick: function(date, nb) {
     $("#inbox-onClick-placeholder").html("You just clicked <br/>on <b>" +
@@ -59,7 +59,7 @@
   cal.init({ 
   itemSelector: "#sent-map",
   domain: "month",
-  subDomain: "day",
+  subDomain: "x_day",
   data: e,
   start: new Date(2014, 0),
   cellSize: 10,

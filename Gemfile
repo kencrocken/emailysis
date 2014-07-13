@@ -27,6 +27,7 @@ ruby '2.1.1'
   gem "unicorn-rails"
   gem "delayed_job_active_record"
   gem "workless", "~> 1.1.3"
+  
 # Spring speeds up development by keeping your application running in the background. 
 # Read more: https://github.com/rails/spring
 group :development do
