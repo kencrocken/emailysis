@@ -1,10 +1,10 @@
 class EmailsController < ApplicationController
 
   def new
-    @email = Email.delay.email_fetch(session[:project], current_user.email, session[:token])
+    @email = Email.email_fetch(session[:project], current_user.email, session[:token])
 
     if !@email.nil?
-      flash[:notice] = "Emails populated"
+      flash[:notice] = "Emails are being collected.  Please be patient."
       redirect_to project_path(session[:project])
     else
       flash[:alert] = "Emails failed"
@@ -17,7 +17,6 @@ class EmailsController < ApplicationController
   end
 
   def search
-    p params[:q]
     @my_emails = Email.search_email(params[:q])
     @my_emails = @my_emails.where project_id: session[:project]
   end

@@ -27,7 +27,6 @@ class Email < ActiveRecord::Base
         puts x
       end
     end
-    imap.logout
   end
 
   def self.email_count(dates)

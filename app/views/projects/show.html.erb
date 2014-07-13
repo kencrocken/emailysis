@@ -1,12 +1,12 @@
 <h1><%= "#{@project.name}" %> <small><%= "#{@project.description}" %></small></h1>
-
-
+<%= "#{session[:token]}" %>
 <% if @project.emails.empty? %>
 
   <p>No data associated with project.</p>
   <h3><%= link_to 'Get Email', new_email_path, class: "btn btn-large btn-primary" %></h3>
 
 <% else %>
+
 <%= javascript_tag "var d = #{@inbox_date_count.to_json}
                     var e = #{@sent_date_count.to_json}
                     var f = #{@sender_count.to_json}
@@ -23,7 +23,7 @@
     <% end %>
   </div>
 <!-- </form> -->
-<%= "#{@date_difference}" %>
+
   <h3>Inbox</h3>
   <div id="inbox-map"></div>
 
