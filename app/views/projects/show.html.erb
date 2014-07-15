@@ -10,7 +10,9 @@
 <%= javascript_tag "var d = #{@inbox_date_count.to_json}
                     var e = #{@sent_date_count.to_json}
                     var f = #{@sender_count.to_json}
-                    var g = #{@to_count.to_json}" %>
+                    var g = #{@to_count.to_json}
+                    var inbox_date_range = #{@inbox_date_difference}
+                    var sent_date_range = #{@sent_date_difference}" %>
 
 <!-- <form class="form-horizontal" role="form"> -->
   <div class="form-group">
@@ -36,13 +38,13 @@
   data: d,
   start: new Date(<%= "#{@start_year}, #{@start_month}, #{@start_day}" %>),
   cellSize: 10,
-  range: <%= @date_difference %>,
+  range: inbox_date_range,
   tooltip: true,
-  legend: [2, 4, 6, 8],
+  legend: [1, 4, 6, 8],
   legendColors: ["#efefef", "steelblue"],
   onClick: function(date, nb) {
-    $("#inbox-onClick-placeholder").html("You just clicked <br/>on <b>" +
-      date + "</b> <br/>with <b>" +
+    $("#inbox-onClick-placeholder").html("You just clicked <br/>on <b><a href ='/search_date/'" +
+      date + ">"+parse(date)+"</b> <br/>with <b>" +
       (nb === null ? "unknown" : nb) + "</b> items"
     );
   }
@@ -59,18 +61,18 @@
   cal.init({ 
   itemSelector: "#sent-map",
   domain: "month",
-  subDomain: "x_day",
+  subDomain: "day",
   data: e,
-  start: new Date(2014, 0),
+  start: new Date(<%= "#{@sent_start_year}, #{@sent_start_month}, #{@sent_start_day}" %>),
   cellSize: 10,
-  range: 12,
+  range: sent_date_range,
   tooltip: true,
-  legend: [2, 4, 6, 8],
+  legend: [1, 4, 6, 8],
   legendColors: ["#efefef", "steelblue"],
   onClick: function(date, nb) {
     $("#sent-onClick-placeholder").html("You just clicked <br/>on <b>" +
       date + "</b> <br/>with <b>" +
-      (nb === null ? "unknown" : nb) + "</b> items"
+      (nb === null ? "unknown" : nb) + "</b> items<br/>"
     );
   }
   });

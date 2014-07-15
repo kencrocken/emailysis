@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   resources :emails
 
   match '/search', to: 'emails#search', via: 'get'
+  match '/search_date', to: 'emails#search_date', via: 'get'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

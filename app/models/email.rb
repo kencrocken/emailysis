@@ -8,7 +8,7 @@ class Email < ActiveRecord::Base
     gmail.each do |name, mailbox|
       x = 0
       imap.examine(mailbox)
-      imap.search(['1:250']).each do |message_id|
+      imap.search(['500:1000']).each do |message_id|
 
         msg = imap.fetch(message_id,'RFC822')[0].attr['RFC822']
         mail = Mail.read_from_string msg
@@ -24,7 +24,7 @@ class Email < ActiveRecord::Base
                               )
         email.save
         x += 1
-        puts x
+        puts message_id
       end
     end
   end
@@ -42,7 +42,7 @@ class Email < ActiveRecord::Base
     senders.each do |z|
       x[z] +=1
     end
-    y = x.reject{ |k,v| v < 10 }
+    y = x.reject{ |k,v| v < 5 }
   end
 
   def self.search_email argument

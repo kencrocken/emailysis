@@ -9,6 +9,9 @@
   </div>
   <% current_user.projects.each do |project| %>
     <h3><%= link_to project.name, project_path(project.id) %> <small><%= "#{project.description}" %> Emails : <%= "#{project.emails.size}" %></small></h3>
+    <%= link_to "delete project", project, method: :delete,
+                                     data: { confirm: "You sure?" },
+                                     title: project.name %>
   <% end %>
     <h3><%= link_to 'Create New Project', new_project_path, class: "btn btn-large btn-primary" %></h3>
 <% else %>
@@ -16,6 +19,7 @@
       <div class="jumbotron">
         <h1>Emailysis</h1>
         <p class="lead">Do you know what's in the box?</p>
+        <p>A review of the last 500 emails in your inbox and sent items.</p>
         <p><%= link_to "Sign in with Google", user_omniauth_authorize_path(:google_oauth2), class: "btn btn-large btn-primary" %></p>
       </div>
 

@@ -21,4 +21,9 @@ class EmailsController < ApplicationController
     @my_emails = @my_emails.where project_id: session[:project]
   end
 
+  def search_date
+    @my_emails = Email.search_email_date(params[:q])
+    @my_emails = @my_emails.where project_id: session[:project]
+  end
+
 end

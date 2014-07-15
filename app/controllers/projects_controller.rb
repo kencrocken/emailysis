@@ -1,4 +1,5 @@
 class ProjectsController < ApplicationController
+  before_action :set_project, only: [:show, :edit, :update, :destroy]
 
 
   def index
@@ -9,10 +10,9 @@ class ProjectsController < ApplicationController
 
   def show
 
-    @project = current_user.projects.find params[:id]
     session[:project] = @project.id
     if !@project.emails.empty?
-      
+
         @inbox = @project.emails.order(sent_at: :desc).where folder: "inbox"
         @sent = @project.emails.order(sent_at: :desc).where folder: "sent"
 
@@ -20,22 +20,35 @@ class ProjectsController < ApplicationController
         @sent_date_array = []
         @sender_array = []
         @to_array = []
-        @start_date = @project.emails.first
-        @end_date = @project.emails.last
+        
+        ## --- Inbox range and start date
+        @start_date = @inbox.first
+        @end_date = @inbox.last
         @start = @start_date.sent_at
         @end = @end_date.sent_at
-        @date_difference = (@end.to_date - @start.to_date).to_i
+        @inbox_date_difference = (@start.to_date - @end.to_date).to_i
         @start_year = @start_date.sent_at.to_time.strftime('%Y')
         @start_month = @start_date.sent_at.to_time.strftime('%m')
         @start_month = @start_month.to_i
         @start_month -= 1
         @start_day = @start_date.sent_at.to_time.strftime('%d')
 
+        ## --- Sent range and start date
+        @sent_start= @sent.first
+        @sent_end= @sent.last
+        @sent_start_date = @sent_start.sent_at.to_date
+        @sent_end_date = @sent_end.sent_at.to_date
+        @sent_date_difference = (((@sent_end_date - @sent_start_date)%12)+2).to_i
+        @sent_start_year = @sent_start_date.to_time.strftime('%Y')
+        @sent_start_month = @sent_start_date.to_time.strftime('%m')
+        @sent_start_month = @sent_start_month.to_i
+        @sent_start_month -= 1
+        @sent_start_day = @sent_start_date.to_time.strftime('%d')
+
       @inbox.each do |info|
 
-        x = info.sent_at
+        x = info.sent_at.to_datetime
         x = x.to_time.to_i
-        x = x.to_s
         @inbox_date_array << x
 
         y = info.from
@@ -45,7 +58,7 @@ class ProjectsController < ApplicationController
 
       @sent.each do |info|
 
-        x = info.sent_at.to_date
+        x = info.sent_at.to_datetime
         x = x.to_time.to_i
         @sent_date_array << x
 
@@ -64,10 +77,6 @@ class ProjectsController < ApplicationController
       @inbox = @inbox.paginate(page: params[:page], :per_page => 20)
       @sent = @sent.paginate(page: params[:page], :per_page => 20)
       
-      respond_to do |format|
-        format.html # show.html.erb
-        format.json { render json: @sender_count}
-      end
     end 
   end
 
@@ -90,14 +99,20 @@ class ProjectsController < ApplicationController
   def edit
   end
 
+  def destroy
+    @project.destroy
+    flash[:notice] = "Project deleted."
+    redirect_to root_path
+  end
+
   private
 
     def project_params
       params.require(:project).permit(:name, :description)
     end
 
-    def project_session
-      session[:project] = @project.id
+    def set_project
+      @project = current_user.projects.find params[:id]
     end
 
 end
