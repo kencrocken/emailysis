@@ -7,7 +7,7 @@ class Email < ActiveRecord::Base
     gmail = {inbox: 'INBOX', sent: '[Gmail]/Sent Mail'}
     gmail.each do |name, mailbox|
       x = 0
-      imap.select(mailbox)
+      imap.examine(mailbox)
       imap.search(['ALL']).each do |message_id|
 
         msg = imap.fetch(message_id,'RFC822')[0].attr['RFC822']
