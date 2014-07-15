@@ -7,7 +7,6 @@
   </ul>
 <% end %>
 
-<form role="form">
 <%= form_for @project do |f| %>
   <div class="form-group">
     <%= f.label :name, "Project Name:" %>
@@ -22,4 +21,3 @@
   <%= f.submit "Submit", class: "btn btn-default" %>
 
 <% end %>
-</form>
