@@ -62,17 +62,14 @@ GEM
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
     erubis (2.7.0)
-    excon (0.38.0)
     execjs (2.2.1)
     faraday (0.9.0)
       multipart-post (>= 1.2, < 3)
     gmail_xoauth (0.4.1)
       oauth (>= 0.3.6)
     hashie (2.1.2)
-    heroku-api (0.3.18)
-      excon (~> 0.27)
-      multi_json (~> 1.8)
     hike (1.2.3)
+    hirefire-resource (0.3.2)
     i18n (0.6.9)
     jbuilder (2.1.2)
       activesupport (>= 3.0.0, < 5)
@@ -143,8 +140,6 @@ GEM
     rake (10.3.2)
     rdoc (3.12.2)
       json (~> 1.4)
-    rush (0.6.8)
-      session
     sass (3.2.19)
     sass-rails (4.0.3)
       railties (>= 4.0.0, < 5.0)
@@ -154,7 +149,6 @@ GEM
     sdoc (0.3.20)
       json (>= 1.1.3)
       rdoc (~> 3.10)
-    session (3.2.0)
     spring (1.1.3)
     sprockets (2.11.0)
       hike (~> 1.2)
@@ -188,11 +182,6 @@ GEM
     warden (1.2.3)
       rack (>= 1.0)
     will_paginate (3.0.4)
-    workless (1.1.3)
-      delayed_job (>= 2.0.7)
-      heroku-api
-      rails
-      rush
 
 PLATFORMS
   ruby
@@ -206,6 +195,7 @@ DEPENDENCIES
   delayed_job_active_record
   devise
   gmail_xoauth
+  hirefire-resource
   jbuilder (~> 2.0)
   jquery-rails
   json
@@ -225,4 +215,3 @@ DEPENDENCIES
   uglifier (>= 1.3.0)
   unicorn-rails
   will_paginate (= 3.0.4)
-  workless (~> 1.1.3)
