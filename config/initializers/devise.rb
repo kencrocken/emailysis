@@ -233,7 +233,7 @@ Devise.setup do |config|
   config.omniauth :google_oauth2, ENV['GOOGLE_ID'], ENV['GOOGLE_SECRET'],
                                   { :scope => "https://mail.google.com/,email,profile,plus.me",
                                     :image_aspect_ratio => "square",
-                                    :image_size => 50,
+                                    :image_size => 100,
                                     access_type: "offline", 
                                     approval_prompt: "" }
 

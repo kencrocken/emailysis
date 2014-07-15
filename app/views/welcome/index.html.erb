@@ -1,10 +1,13 @@
 <% if user_signed_in? %>
   <div class= "row">
-    <div class = "col-md-1">
-      <p><%= image_tag current_user.image, class: "img-responsive img-rounded" %></p>
+    <div class = "col-md-3">
+      <%= image_tag current_user.image, class: "img-responsive img-circle" %>
     </div>
     <div class = "col-md-6">
       <h2><%= current_user.name %></h2>
+      <%= link_to "delete user", "/users", method: :delete,
+                                     data: { confirm: "You sure?" },
+                                     title: current_user.name %>
     </div>
   </div>
   <% current_user.projects.each do |project| %>
