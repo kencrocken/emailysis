@@ -27,11 +27,11 @@ class ProjectsController < ApplicationController
         @start = @start_date.sent_at
         @end = @end_date.sent_at
         @inbox_date_difference = (@start.to_date - @end.to_date).to_i
-        @start_year = @start_date.sent_at.to_time.strftime('%Y')
-        @start_month = @start_date.sent_at.to_time.strftime('%m')
+        @start_year = @end.to_time.strftime('%Y')
+        @start_month = @end.to_time.strftime('%m')
         @start_month = @start_month.to_i
         @start_month -= 1
-        @start_day = @start_date.sent_at.to_time.strftime('%d')
+        @start_day = @end.to_time.strftime('%d')
 
         ## --- Sent range and start date
         @sent_start= @sent.first

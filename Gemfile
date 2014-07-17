@@ -28,6 +28,7 @@ ruby '2.1.1'
   gem "delayed_job_active_record"
   gem "workless", "~> 1.1.3"
   gem 'newrelic_rpm'
+  gem "daemons"
   # gem 'hirefire-resource'
   
 # Spring speeds up development by keeping your application running in the background. 

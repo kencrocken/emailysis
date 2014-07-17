@@ -8,5 +8,5 @@
   </div>
 </div>
 <div class = "well">
-  <p><%== @email.content %></p>
+  <p><%= sanitize @email.content %></p>
 </div>

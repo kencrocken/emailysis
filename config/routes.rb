@@ -9,7 +9,9 @@ Rails.application.routes.draw do
   root 'welcome#index'
   resources :projects
   resources :emails
-
+  match '/about', to: 'welcome#about', via: 'get'
+  match '/contact', to: 'welcome#contact', via: 'get'
+  match '/loading', to: 'emails#loading', via: 'get'
   match '/search', to: 'emails#search', via: 'get'
   match '/search_date', to: 'emails#search_date', via: 'get'
   # Example of regular route:

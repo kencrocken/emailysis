@@ -1,21 +1,29 @@
 <% if user_signed_in? %>
+
   <div class= "row">
-    <div class = "col-md-3">
+    <div class = "col-sm-3">
       <%= image_tag current_user.image, class: "img-responsive img-circle" %>
     </div>
-    <div class = "col-md-6">
+    <div class = "col-sm-6">
       <h2><%= current_user.name %></h2>
-      <%= link_to "delete user", "/users", method: :delete,
+      <%= link_to "delete user account", "/users", method: :delete,
                                      data: { confirm: "You sure?" },
                                      title: current_user.name %>
     </div>
   </div>
   <% current_user.projects.each do |project| %>
-    <h3><%= link_to project.name, project_path(project.id) %> <small><%= "#{project.description}" %> Emails : <%= "#{project.emails.size}" %></small></h3>
+
+    <h3><%= link_to project.name, project_path(project.id) %> 
+      <small><%= "#{project.description}" %> 
+        <span class="badge"><%= "#{project.emails.size}" %></span>
+      </small>
+    </h3>
+
     <%= link_to "delete project", project, method: :delete,
                                      data: { confirm: "You sure?" },
-                                     title: project.name %>
+                                     title: project.name %><br/>
   <% end %>
+
     <h3><%= link_to 'Create New Project', new_project_path, class: "btn btn-large btn-primary" %></h3>
 <% else %>
 
