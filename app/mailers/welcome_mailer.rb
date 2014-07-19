@@ -1,5 +1,5 @@
 class WelcomeMailer < ActionMailer::Base
-    default to: ENV["GMAIL_USERNAME"]
+    default to: "kcrocken@gmail.com"
 
     def contact_email(name, email, body)
         @name = name
