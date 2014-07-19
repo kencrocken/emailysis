@@ -14,10 +14,10 @@ class EmailsController < ApplicationController
 
   def show
     @email = Email.find params[:id]
-    respond_to do |format|
-      format.html
-      format.json  { render json: @email.to_json }
-    end
+    # respond_to do |format|
+    #   format.html
+    #   format.json  { render json: @email.to_json }
+    # end
   end
 
   def search
@@ -33,12 +33,14 @@ class EmailsController < ApplicationController
   def loading
     @that = Delayed::Job.last
     @count = Email.where project_id: session[:project]
-    @this = @count.length
-    if @this == 1000
-      flash[:notice] = "Emails have been collected."
-      redirect_to root_path
+    @this = @count.length / 10
+    # if @this == 1000
+    #   flash[:notice] = "Emails have been collected."
+    #   redirect_to root_path
+    # end
+    respond_to do |format|
+      format.html
+      format.json
     end
-
   end
-
 end

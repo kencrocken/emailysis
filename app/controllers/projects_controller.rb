@@ -20,6 +20,7 @@ class ProjectsController < ApplicationController
         @sent_date_array = []
         @sender_array = []
         @to_array = []
+        @links = []
         
         ## --- Inbox range and start date
         @start_date = @inbox.first
@@ -52,6 +53,7 @@ class ProjectsController < ApplicationController
         @inbox_date_array << x
 
         y = info.from
+        y.gsub("\\[.*?\\] ", "")
         @sender_array << y
 
       end
@@ -64,6 +66,19 @@ class ProjectsController < ApplicationController
 
         y = info.to
         @to_array << y
+
+        y = y.split( /, */ )
+        y.each do |link|
+
+          @links << { source: info.from, target: link, group: info.sent_at }
+
+        end
+
+        # @forced_layout[:links].each do |link|
+        #   @forced_layout[:nodes] << { name: link[:source] }
+        #   @forced_layout[:nodes] << { name: link[:target] }
+        # end
+
       end
 
       @inbox_date_count = Email.email_count(@inbox_date_array)
@@ -78,6 +93,10 @@ class ProjectsController < ApplicationController
       @sent = @sent.paginate(page: params[:page], :per_page => 20)
       
     end 
+    # respond_to do |format|
+    #   format.html
+    #   format.json { render json: @forced_layout.to_json }
+    # end
   end
 
 

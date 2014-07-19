@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   match '/loading', to: 'emails#loading', via: 'get'
   match '/search', to: 'emails#search', via: 'get'
   match '/search_date', to: 'emails#search_date', via: 'get'
+  match '/send_mail', to: 'welcome#send_mail', via: 'post'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

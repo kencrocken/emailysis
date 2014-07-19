@@ -1,5 +1,27 @@
-<h1 class="text-center">Message : <%= "#{@this}" %></h1>
+<h1 id="message" class="text-center"></h1>
+
+
+<div class="progress progress-bar-info" id="progressouter">
+   <div class="progress-bar" id="progress"></div>
+</div>
 
 <script type="text/javascript">
-  setTimeout(function () { location.reload(true); }, 1000);
+$(document).ready(function(){
+  var progresspump = setInterval(function(){
+    /* query the completion percentage from the server */
+    $.get("loading.json", function(data){
+      /* update the progress bar width */
+      $("#progress").css('width',data.count+'%');
+      /* and display the numeric value */
+      $("#message").html(data.count * 10 +' messages retrieved');
+
+      /* test to see if the job has completed */
+      if(data.count > 99.999) {
+        clearInterval(progresspump);
+        // $("#progressouter").removeClass("active");
+        $("#message").html("Completed");
+        setInterval(function(){window.location.href = "/";}, 450);
+      }
+    })
+  }, 1000);});
 </script>
