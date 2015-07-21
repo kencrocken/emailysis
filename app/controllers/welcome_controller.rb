@@ -13,11 +13,24 @@ class WelcomeController < ApplicationController
   end
 
   def send_mail
-    name = params[:name]
-    email = params[:email]
-    body = params[:comments]
-    WelcomeMailer.contact_email(name, email, body).deliver
-    redirect_to root_path, notice: 'Message sent'
+    # name = params[:message][:name]
+    # email = params[:message][:email]
+    # body = params[:message][:comments]
+    puts params[:message]
+    if params[:message][:name].empty?
+      redirect_to contact_path, alert: "A name is required."
+    elsif params[:message][:email].empty?
+      redirect_to contact_path, alert: "An email is required."
+    else
+      WelcomeMailer.contact_email(mail_params).deliver
+      redirect_to root_path, notice: 'Message sent'
+    end
   end
+
+  private
+
+    def mail_params
+      params.require(:message).permit(:name, :email, :comments)
+    end
   
 end

@@ -1,11 +1,11 @@
 class WelcomeMailer < ActionMailer::Base
     default to: "kcrocken@gmail.com"
 
-    def contact_email(name, email, body)
-        @name = name
-        @email = email
-        @body = body
+    def contact_email(message)
+        @name = message[:name]
+        @email = message[:email]
+        @body = message[:comments]
 
-        mail(from: email, subject: 'Contact Request')
+        mail(from: "no-reply@emailysis.com", subject: 'Contact Request')
     end
 end
