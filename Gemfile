@@ -12,7 +12,7 @@ ruby '2.1.1'
   gem 'sprockets', '2.11.0'
   gem 'will_paginate', '3.0.4'
   gem 'bootstrap-will_paginate', '0.0.10'
-
+  gem 'font-awesome-sass'
 
   gem 'oauth2'
   gem 'omniauth-google-oauth2'

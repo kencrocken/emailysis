@@ -1,3 +1,25 @@
-{
-    "count" : "<%= @this.to_json %>"
-}
+<% if !@complete %>
+    {
+        "count" : "<%= @this.to_json %>",
+        "project" : "<%= session[:project] %>",
+        "job_started" : "<%= @locked_at %>",
+        "job_fail" : "<%= @last_error %>",
+        "completed" : false
+    }
+
+<% elsif @complete %>
+
+
+    {
+        "project" : "<%= session[:project] %>", 
+        "completed" : true 
+    }
+<% else %>
+
+    {
+        "project" : "<%= session[:project] %>", 
+        "job_fail" : true,
+        "completed" : true 
+    }
+
+<% end %>

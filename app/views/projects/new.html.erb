@@ -8,16 +8,21 @@
 <% end %>
 
 <%= form_for @project do |f| %>
+<div class="form-horizontal">
   <div class="form-group">
-    <%= f.label :name, "Project Name:" %>
-    <%= f.text_field :name, class: "form-control", placeholder: "Project Name" %>
+    <%= f.label :name, "Project Name:", class: 'col-sm-3 control-label' %>
+    <div class="col-sm-9">
+      <%= f.text_field :name, class: "form-control", placeholder: "Project Name" %>
+    </div>
   </div>
 
   <div class="form-group">
-    <%= f.label :description, "Project description:" %>
-    <%= f.text_area :description, class: "form-control", placeholder: "Project description" %>
+    <%= f.label :description, "Project description:", class: 'col-sm-3 control-label' %>
+    <div class="col-sm-9">
+      <%= f.text_area :description, class: "form-control", placeholder: "Project description" %>
+    </div>
   </div>
 
-  <%= f.submit "Submit", class: "btn btn-default" %>
-
+  <%= f.submit "Submit", class: "btn btn-default pull-right" %>
+</div>
 <% end %>

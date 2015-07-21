@@ -5,6 +5,7 @@ class EmailsController < ApplicationController
 
     if !@email.nil?
       flash[:notice] = "Emails are being collected.  Please be patient."
+      # redirect_to project_path(session[:project])
       redirect_to loading_path
     else
       flash[:alert] = "Emails failed"
@@ -31,12 +32,21 @@ class EmailsController < ApplicationController
   end
 
   def loading
-    @that = Delayed::Job.last
+    if Delayed::Job.last
+      @that = Delayed::Job.last
+      @complete = false
+      @locked_at = @that.locked_at
+      @error = @that.last_error
+    else
+      @complete = true
+    end
+
     @count = Email.where project_id: session[:project]
-    @this = @count.length / 10
+    @this = @count.length
     # if @this == 1000
     #   flash[:notice] = "Emails have been collected."
-    #   redirect_to root_path
+    #   redirect_to project_path(session[:project])
+    #   return
     # end
     respond_to do |format|
       format.html

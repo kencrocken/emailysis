@@ -1,8 +1,10 @@
+<p>&#3840;</p>
+
 <h1 id="message" class="text-center"></h1>
 
 
-<div class="progress progress-bar-info" id="progressouter">
-   <div class="progress-bar" id="progress"></div>
+<div class="progress" id="progressouter">
+   <div class="progress-bar progress-bar-striped active" id="progress"></div>
 </div>
 
 <script type="text/javascript">
@@ -10,18 +12,23 @@ $(document).ready(function(){
   var progresspump = setInterval(function(){
     /* query the completion percentage from the server */
     $.get("loading.json", function(data){
-      /* update the progress bar width */
-      $("#progress").css('width',data.count+'%');
-      /* and display the numeric value */
-      $("#message").html(data.count * 10 +' messages retrieved');
+      /* add active class */
 
+      /* update the progress bar width */
+      $("#progress").css('width', data.count/10 +'%');
+      /* and display the numeric value */
+      $("#message").html(data.count +' messages retrieved');
+      console.log (data);
       /* test to see if the job has completed */
-      if(data.count > 99.999) {
+      if(data.completed) {
         clearInterval(progresspump);
-        // $("#progressouter").removeClass("active");
+        $("#progressouter").removeClass('active');
         $("#message").html("Completed");
-        setInterval(function(){window.location.href = "/";}, 450);
+        setInterval(function(){window.location.href = "/"}, 450);
+      } else if (data.job_fail) {
+        $("#progressouter").removeClass('active');
+        $("#message").html("There was an error, please return Home.");
       }
     })
-  }, 1000);});
+  }, 100);});
 </script>
